@@ -1,0 +1,87 @@
+Resource object created!
+Resource object still alive!
+Resource object created!
+Resource object destroyed!
+Process:         leak_demo [81560]
+Path:            /Users/USER/Documents/*/leak_demo
+Load Address:    0x1000a4000
+Identifier:      leak_demo
+Version:         0
+Code Type:       X86-64
+Platform:        macOS
+Parent Process:  leaks [81559]
+
+Date/Time:       2025-09-23 19:16:08.579 -0400
+Launch Time:     2025-09-23 19:16:06.632 -0400
+OS Version:      macOS 14.7.4 (23H420)
+Report Version:  7
+Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
+Analysis Tool Version:  Xcode 16.2 (16C5032a)
+
+Physical footprint:         1672K
+Physical footprint (peak):  1672K
+Idle exit:                  untracked
+----
+
+leaks Report Version: 4.0, multi-line stacks
+Process 81560: 186 nodes malloced for 14 KB
+Process 81560: 1 leak for 16 total leaked bytes.
+
+STACK OF 1 INSTANCE OF 'ROOT LEAK: <malloc in main>':
+3   dyld                               0x7ff810404345 start + 1909
+2   leak_demo                             0x1000a51f9 main + 25  leak_demo.cpp:17
+1   libc++abi.dylib                    0x7ff81074a34a operator new(unsigned long) + 26
+0   libsystem_malloc.dylib             0x7ff8105d7733 _malloc_zone_malloc_instrumented_or_legacy + 114 
+====
+    1 (16 bytes) ROOT LEAK: <malloc in main 0x7f82d88040f0> [16]
+
+
+
+Binary Images:
+       0x1000a4000 -        0x1000a5ff3 +leak_demo (0) <B4A68DF2-07D8-3FA8-8818-7FC85F40C238> /Users/*/Documents/*/leak_demo
+       0x1000c7000 -        0x1000c7ff7  libLeaksAtExit.dylib (64565.58.2) <FFB2B293-BB8E-3F32-A7BB-5900A872DD3F> /usr/lib/libLeaksAtExit.dylib
+    0x7ff8103bc000 -     0x7ff8103fdfc3  libobjc.A.dylib (912.7) <3501B561-6C4E-3C72-BCC5-EF9254C28A81> /usr/lib/libobjc.A.dylib
+    0x7ff8103fe000 -     0x7ff81048e81f  dyld (1.0.0 - 1165.3) <78F3E8A2-2D65-3E8C-B068-3650AE85946C> /usr/lib/dyld
+    0x7ff81048f000 -     0x7ff810492ff8  libsystem_blocks.dylib (90) <132E528F-CF66-3F31-BAC7-ABE970C37A35> /usr/lib/system/libsystem_blocks.dylib
+    0x7ff810493000 -     0x7ff8104daffd  libxpc.dylib (2748.140.10.700.2) <97D4365A-225A-3241-84FB-EF3815AE9A74> /usr/lib/system/libxpc.dylib
+    0x7ff8104db000 -     0x7ff8104f4ffe  libsystem_trace.dylib (1510.140.4) <E82BF803-1A1A-3A28-B50C-5634F6474433> /usr/lib/system/libsystem_trace.dylib
+    0x7ff8104f5000 -     0x7ff8105abfc7  libcorecrypto.dylib (1638.140.6) <73C11360-2A89-3BAF-AE06-BBCBA93398F9> /usr/lib/system/libcorecrypto.dylib
+    0x7ff8105ac000 -     0x7ff8105ebfff  libsystem_malloc.dylib (521.120.7) <EFF78FB7-B5A3-3EFC-8C45-309184AE989F> /usr/lib/system/libsystem_malloc.dylib
+    0x7ff8105ec000 -     0x7ff810632ff1  libdispatch.dylib (1477.100.9) <DA7E48C5-D133-32D8-967D-DC70B29FF35F> /usr/lib/system/libdispatch.dylib
+    0x7ff810633000 -     0x7ff810635ff3  libsystem_featureflags.dylib (86) <D2B019D7-0539-35CB-9018-05E34D91B5DE> /usr/lib/system/libsystem_featureflags.dylib
+    0x7ff810636000 -     0x7ff8106bdff7  libsystem_c.dylib (1592.100.35) <17B641BA-925C-39A9-AA43-AB3B0BCDFE01> /usr/lib/system/libsystem_c.dylib
+    0x7ff8106be000 -     0x7ff810738ff3  libc++.1.dylib (1700.255.5) <ACDB3AFE-F896-313C-8D5B-2B2810639D29> /usr/lib/libc++.1.dylib
+    0x7ff810739000 -     0x7ff81074efff  libc++abi.dylib (1700.255.5) <5320AF7A-64EF-3E40-AB41-19DC8049EE92> /usr/lib/libc++abi.dylib
+    0x7ff81074f000 -     0x7ff810789ff7  libsystem_kernel.dylib (10063.141.1.703.2) <04708F01-8ADE-3BCA-94E0-392C1B47DB19> /usr/lib/system/libsystem_kernel.dylib
+    0x7ff81078a000 -     0x7ff810795ff7  libsystem_pthread.dylib (519.120.4) <79ECAB15-71F1-3D6A-8A96-0623E622205F> /usr/lib/system/libsystem_pthread.dylib
+    0x7ff810796000 -     0x7ff8107bafff  libdyld.dylib (1165.3) <76C5DD13-0BB5-3997-A269-A98694254189> /usr/lib/system/libdyld.dylib
+    0x7ff8107bb000 -     0x7ff8107c5ff7  libsystem_platform.dylib (316.100.10) <CF0D62BF-94EA-338B-81D2-4EF8161CDF4E> /usr/lib/system/libsystem_platform.dylib
+    0x7ff8107c6000 -     0x7ff8107f0fff  libsystem_info.dylib (583.0.1) <F930D0D9-8591-346C-AFCA-E04B9562B156> /usr/lib/system/libsystem_info.dylib
+    0x7ff8139ed000 -     0x7ff8139f7ff7  libsystem_darwin.dylib (1592.100.35) <96C9FD16-F5AC-3411-B636-BB08706BD6FD> /usr/lib/system/libsystem_darwin.dylib
+    0x7ff813e39000 -     0x7ff813e48ff7  libsystem_notify.dylib (317.120.2.701.1) <41F1F417-B02A-3531-86B9-04039DFBF0FC> /usr/lib/system/libsystem_notify.dylib
+    0x7ff815da9000 -     0x7ff815dc1ff7  libsystem_networkextension.dylib (1838.140.5.700.1) <96312BE1-77F7-30AF-9BA7-2D728F8138E2> /usr/lib/system/libsystem_networkextension.dylib
+    0x7ff815e35000 -     0x7ff815e4bfff  libsystem_asl.dylib (398) <E512A8FB-8353-3B97-A8F8-F5259F0B5B53> /usr/lib/system/libsystem_asl.dylib
+    0x7ff8179da000 -     0x7ff8179e1fff  libsystem_symptoms.dylib (1871.140.6) <7F95A927-603D-347C-A01C-0E227921913A> /usr/lib/system/libsystem_symptoms.dylib
+    0x7ff81ad30000 -     0x7ff81ad58ffb  libsystem_containermanager.dylib (582.140.2) <BB3FB829-E831-395D-94B7-1C4A72274737> /usr/lib/system/libsystem_containermanager.dylib
+    0x7ff81bd04000 -     0x7ff81bd07ff3  libsystem_configuration.dylib (1300.120.2) <3A1B6B61-1686-3A4D-8BFF-6C8E986975EE> /usr/lib/system/libsystem_configuration.dylib
+    0x7ff81bd08000 -     0x7ff81bd0efff  libsystem_sandbox.dylib (2190.140.13.703.1) <0F741CD7-B231-3885-A2C3-81E2E1CC6D7C> /usr/lib/system/libsystem_sandbox.dylib
+    0x7ff81cd05000 -     0x7ff81cd07ff7  libquarantine.dylib (172.140.2.700.1) <4C0ACACC-039D-30DD-A89D-C581F7637E1B> /usr/lib/system/libquarantine.dylib
+    0x7ff81d627000 -     0x7ff81d62cfff  libsystem_coreservices.dylib (152.5.3) <AD4FF35C-79B3-3DE1-86D8-719BB16EE366> /usr/lib/system/libsystem_coreservices.dylib
+    0x7ff81d96b000 -     0x7ff81d9cefe7  libsystem_m.dylib (3252.100.9) <EAB4229A-72C0-3E27-8ACC-2D8B0ED63EC0> /usr/lib/system/libsystem_m.dylib
+    0x7ff81d9d0000 -     0x7ff81d9d5fff  libmacho.dylib (1010.6) <2378174D-9DDE-346E-BCFC-4A545CFB70D4> /usr/lib/system/libmacho.dylib
+    0x7ff81d9ef000 -     0x7ff81d9fafff  libcommonCrypto.dylib (600028.100.1) <028FFB88-0861-372B-A062-BB8F0A9C22A1> /usr/lib/system/libcommonCrypto.dylib
+    0x7ff81d9fb000 -     0x7ff81da03fff  libunwind.dylib (1700.242) <5D484DF1-A67A-326C-B9A8-F8E45AEE5109> /usr/lib/system/libunwind.dylib
+    0x7ff81da04000 -     0x7ff81da0bfff  liboah.dylib (318.9) <4BFA6670-EB8D-3022-BC15-89F3CCC1A1D6> /usr/lib/liboah.dylib
+    0x7ff81da0c000 -     0x7ff81da16fff  libcopyfile.dylib (196.120.5) <C2603C3A-A031-34AD-959E-DDD794C1D6AE> /usr/lib/system/libcopyfile.dylib
+    0x7ff81da17000 -     0x7ff81da1efff  libcompiler_rt.dylib (103.2) <C1FE3717-C8C4-3ACA-AEE9-AE0E2AC4790F> /usr/lib/system/libcompiler_rt.dylib
+    0x7ff81da1f000 -     0x7ff81da23fff  libsystem_collections.dylib (1592.100.35) <E9333053-A04E-30A8-9BB8-755B30C23A55> /usr/lib/system/libsystem_collections.dylib
+    0x7ff81da24000 -     0x7ff81da26fff  libsystem_secinit.dylib (147.140.2) <E7F1E3DD-D80D-372C-9A4D-1A18FFDEC38D> /usr/lib/system/libsystem_secinit.dylib
+    0x7ff81da27000 -     0x7ff81da28ff7  libremovefile.dylib (70.100.4) <7AF962CA-62D3-381A-9A57-D5288B51646B> /usr/lib/system/libremovefile.dylib
+    0x7ff81da29000 -     0x7ff81da29ffb  libkeymgr.dylib (31) <48006049-AC1B-3C6E-AE70-573846AB3256> /usr/lib/system/libkeymgr.dylib
+    0x7ff81da2a000 -     0x7ff81da32ff3  libsystem_dnssd.dylib (2200.140.11.700.1) <64B4FADA-5F6C-3A8B-AECB-761CA0FDBE37> /usr/lib/system/libsystem_dnssd.dylib
+    0x7ff81da33000 -     0x7ff81da38ff7  libcache.dylib (93) <2DA1DCF9-6B83-3C94-AF01-07D8F7D3589C> /usr/lib/system/libcache.dylib
+    0x7ff81da39000 -     0x7ff81da3afff  libSystem.B.dylib (1345.120.2) <B89EF15B-7A35-3A59-8DA7-300B2DA06C5C> /usr/lib/libSystem.B.dylib
+    0x7ff917060000 -     0x7ff91706bff7  com.apple.MallocStackLogging (1.0 - 64565.70.2) <AFD9BC36-713B-3F95-B322-D1B45B30F686> /System/Library/PrivateFrameworks/MallocStackLogging.framework/Versions/A/MallocStackLogging
+    0x7ffc29bbf000 -     0x7ffc29bc2ff3  libsystem_darwindirectory.dylib (86.0.2) <3AD01543-600F-393C-8C24-0343D05D7F01> /usr/lib/system/libsystem_darwindirectory.dylib
+    0x7ffc29bc3000 -     0x7ffc29bc5fff  libsystem_eligibility.dylib (47.140.3) <DD6F0359-370F-3585-98DA-B587DA98AC94> /usr/lib/system/libsystem_eligibility.dylib
+    0x7ffc29bc6000 -     0x7ffc29bc8ff7  libsystem_sanitizers.dylib (8) <0CE921C3-FA0D-3167-9015-A10A5B6B45A1> /usr/lib/system/libsystem_sanitizers.dylib
