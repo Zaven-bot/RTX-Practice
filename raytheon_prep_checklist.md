@@ -8,16 +8,26 @@
 ### Day 1 — RAII & Smart Pointers + Debug Setup
 - [ ] Goal: Understand RAII; run sanitizers and gdb/valgrind basics.
 - Deep Work:
-  - [ ] Read RAII / smart pointer primer (30m)
-  - [ ] Write `leak_demo.cpp` (manual new/delete) and run AddressSanitizer
-  - [ ] Write `no_leak_unique.cpp` with `std::make_unique`; confirm no leak
-  - [ ] Implement `FileWriter` RAII class and test
+  - [X] Read RAII / smart pointer primer (30m)
+  - [X] Write `leak_demo.cpp` (manual new/delete) and run AddressSanitizer
+  - [X] Write `no_leak_unique.cpp` with `std::make_unique`; confirm no leak
+  - [X] Implement `FileWriter` RAII class and test
 - Integration:
-  - [ ] Install gdb, valgrind, clang-tidy, cppcheck
-  - [ ] Create `crash.cpp`, debug with gdb (run → bt → print)
-  - [ ] Run valgrind on leak demo, save output
+  - [X] Install lldb and clang-tidy
+  - [X] Create `crash.cpp`, debug with gdb (run → bt → print)
+  - [X] Run leaks on leak demo, save output
 - Learning:
   - [ ] Write Day 1 log (what, issues, 1 question)
+- Notes:
+  - /usr/local/opt/llvm/bin/clang-tidy program.cpp -- -std=c++17 for static analysis
+  - or export PATH="/user/local/opt/llvm/bin:$PATH" + source ~/.zshrc + "clang-tidy program.cpp ..."
+    - Relays best practices, unsafe practices, modernization suggestions
+    - DOES NOT relay buffer overflows or leaks
+  - AddressSanitizer with -fsanitize=address flag for memory errors 
+    - Relays, use-after-free, buffer overflows, double free, invalid mem access, stack corruption
+    - DOES NOT relay memory leaks
+  - leaks --atExit -- ./programName for leak detection
+  - lldb for low level debugging, step-by-step
 - Checkpoint: Sanitizer shows leak on bad code and no leak on RAII version; gdb/valgrind outputs saved.
 
 ### Day 2 — Threads & Race Conditions
