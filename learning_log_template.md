@@ -29,9 +29,7 @@ This document tracks daily progress, key learnings, and reflections over the 4-w
         - “Queue works for ints, but how to template for generic types?”
 
 
-###
-
-Example No. 2
+### Example No. 2
 1. Focus (1 sentence): 
         
         - “Studied RAII and smart pointers.”
@@ -42,7 +40,7 @@ Example No. 2
         - leak_demo.cpp → intentional leak + leaks output
         - no_leak_unique.cpp → unique_ptr, lock_guard, thread-safe RAII
 
-Key Concepts (bullets, no sentences): 
+3. Key Concepts (bullets, no sentences): 
 
         - unique_ptr
         - lock_guard
@@ -50,11 +48,11 @@ Key Concepts (bullets, no sentences):
         - lldb
         - etc.
 
-Gotchas (1–2 bullets): 
+4. Gotchas (1–2 bullets): 
         
         - “Const with char* vs std::string& confused me.”
 
-Next Step (1 line): 
+5. Next Step (1 line): 
 
         - “Move on to threading basics tomorrow.”
 
@@ -78,7 +76,8 @@ Next Step (1 line):
         - leak_demo.cpp: Allocates a variable pointing to a struct instance and purposefully does not "delete varName" to simulate
         a memory leak. The output of this memory leak is output into leaks_output.txt, utilizing 'leaks --atExit --./leak_demo >
         leaks_output.txt 2>&1'
-        - no_leak_unique.cpp : Super cool. Utilizes both smart pointers, std::lock_guard<std::lockType> g1(instantiatedSharedLockInstance)
+        - no_leak_unique.cpp : Super cool. Utilizes both smart pointers, std::lock_guard<std::lockType> g1
+        (instantiatedSharedLockInstance)
         and std::unique_ptr<Resource> r2(new Resource) to enforce Resource Allocation is Initialization (RAII) property and either
         lock / unlock out of scope or allocate / deallocate out of scope in a thread-safe fashion. 
 
@@ -98,430 +97,456 @@ Next Step (1 line):
 
 **Gotchas / Mistakes (2 min):** Short notes on what tripped you up today.
 
-        Tried accepting filename as a const char* instead of a const std::string&. I learned that const means you can't modify the string
+        Tried accepting filename as a const char* instead of a const std::string&. I learned that const means you can't modify the 
+        string
         you are taking as input. I learned that std::string is safer in term of mem alloc/dealloc. In addition std::string& would allow
         for both std::string and char*, while char* would throw an error with std::string passed in. std::string& is a reference while
         char* is a pointer.
 
 **Next Step / Open Question (2 min)** Define what tomorrow should build on, or note an unresolved issue.
 
-        Continue working on Day 2 requirements.
+        Threading basics ... (review?) tomorrow! :D
 
----
-
-
+**Notes:**
+  - /usr/local/opt/llvm/bin/clang-tidy program.cpp -- -std=c++17 for static analysis
+  - or export PATH="/user/local/opt/llvm/bin:$PATH" + source ~/.zshrc + "clang-tidy program.cpp ..."
+    - Relays best practices, unsafe practices, modernization suggestions
+    - DOES NOT relay buffer overflows or leaks
+  - AddressSanitizer with -fsanitize=address flag for memory errors 
+    - Relays, use-after-free, buffer overflows, double free, invalid mem access, stack corruption
+    - DOES NOT relay memory leaks
+  - leaks --atExit -- ./programName for leak detection
+  - lldb for low level debugging, step-by-step
+- Checkpoint: Sanitizer shows leak on bad code and no leak on RAII version; gdb/valgrind outputs saved.
 
 
 ---
 
 ## Day 2
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+        Threads review, race condition, lock_guard / mutex utilization
 
-**Key Concepts Learned:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Problems Solved / Debugged:** 
+        hello_threads.cpp → utilize threading for two print functions
+                 → utilize threading for a shared count, observe wrong count output
+                 → fix with lock_guard and mutex
+        Jenkins Docker img → view dashboard, explore different functions (eg )
 
-**Design Decisions:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Next Step / Questions for Tomorrow:** 
+        - Threading
+        - fstream OS reliance
+        - Thread safety: Ability to run code concurrently in multuple processes
+                - Lock guard / mutex
+
+4. **Gotchas (1–2 bullets)**: 
+
+        - Creating a class (BestPrinter) and coordinating input/output files with a 
+        single filestream
+        and lock. Understand design requirements before jumping headfirst.
+        - Didn't stay aligned with plan. Took too much time adding complexity. Finish 
+        planned files/features
+        before adding more.
+
+5. **Next Step / Open Question (2 min)** 
+
+        - Implementing a bounded queue.
+        - Watching 30 minutes of Jenkins setup/utilization
 
 ---
 
 ## Day 3
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+        Implemented a bounded queue which utilized two condition variables for producer and consumer threads.
 
-**Key Concepts Learned:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Problems Solved / Debugged:** 
+        - bounded_queue.h → Templated bounded queue functions' declarance and definition
+        - producer_consumer.cpp → Implementation of bounded_queue with producer and 
+        consumer threads, utilizing locks for printing
+        - test_queue.cpp → Simple unit test utilizing the google test (gtest) framework
+        - CMakeLists.txt → CMake file defining which files needed to be grouped to create 
+        executables
+                         → Practiced utilizing cmake / make CMDs
 
-**Design Decisions:** 
+3. **Key Concepts Learned (bullets):**
 
-**Next Step / Questions for Tomorrow:** 
+        - Class definitions and Class declarations
+                - ClassName::ClassFunction
+        - CMake for executable creation
+        - C++17, C++11, C++3 awareness
+        - Unit testing in C++ with gtest
+        - Lock ordering
+
+4. **Gotchas (1–2 bullets)**: 
+
+        - I had used locks haphazardly. This didn't lead to a deadlock, but the printing
+        became unpredictable. I'll be more aware of this in practice. I think I'll need to
+        look into lock ordering as well.
+
+5. **Next Step / Open Question (2 min)** 
+
+        - Utilizing Jenkins to orchestrate C++ Day 3 code. Also 30 minutes of LinkedIn 
+        Jenkins understanding
 
 ---
 
 ## Day 4
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 5
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 6
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 7
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 # Week 2
 
 ## Day 8
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 9
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 10
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 11
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 12
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 13
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 14
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 # Week 3
 
 ## Day 15
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 16
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 17
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 18
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 19
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 20
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 21
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 # Week 4
 
 ## Day 22
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 23
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 24
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 25
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 26
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 27
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 
 ## Day 28
-**Focus:** 
+1. **Focus (1 sentence)**: 
 
-**What I Built / Practiced:** 
+2. **What I Built / Practiced (bullets):** 
 
-**Key Concepts Learned:** 
+3. **Key Concepts Learned (bullets):** 
 
-**Problems Solved / Debugged:** 
+4. **Gotchas (1–2 bullets)**: 
 
-**Design Decisions:** 
-
-**Next Step / Questions for Tomorrow:** 
+5. **Next Step / Open Question (2 min)** 
+ 
 
 ---
 

@@ -17,42 +17,30 @@
   - [X] Create `crash.cpp`, debug with gdb (run → bt → print)
   - [X] Run leaks on leak demo, save output
 - Learning:
-  - [ ] Write Day 1 log (what, issues, 1 question)
-- Notes:
-  - /usr/local/opt/llvm/bin/clang-tidy program.cpp -- -std=c++17 for static analysis
-  - or export PATH="/user/local/opt/llvm/bin:$PATH" + source ~/.zshrc + "clang-tidy program.cpp ..."
-    - Relays best practices, unsafe practices, modernization suggestions
-    - DOES NOT relay buffer overflows or leaks
-  - AddressSanitizer with -fsanitize=address flag for memory errors 
-    - Relays, use-after-free, buffer overflows, double free, invalid mem access, stack corruption
-    - DOES NOT relay memory leaks
-  - leaks --atExit -- ./programName for leak detection
-  - lldb for low level debugging, step-by-step
-- Checkpoint: Sanitizer shows leak on bad code and no leak on RAII version; gdb/valgrind outputs saved.
+  - [X] Write Day 1 log (what, issues, 1 question)
 
 ### Day 2 — Threads & Race Conditions
-- [ ] Goal: Reproduce & fix a race; run ThreadSanitizer/Helgrind.
+- [X] Goal: Reproduce & fix a race; run ThreadSanitizer/Helgrind.
 - Deep Work:
-  - [ ] `hello_threads.cpp` (2 threads)
-  - [ ] `race.cpp` shared counter (no locking) → observe wrong result
-  - [ ] Fix with `std::mutex` (`lock_guard`)
+  - [X] `hello_threads.cpp` (2 threads) → → →  I did like 35 lol
+  - [X] Shared counter (no locking) → observe wrong result
+  - [X] Fix with `std::mutex` (`lock_guard`)
 - Integration:
-  - [ ] Compile/run with `-fsanitize=thread`; observe detection
-  - [ ] Run valgrind helgrind and compare
+  - [X] Compile/run with `-fsanitize=thread`; observe detection
 - Learning:
-  - [ ] Jenkins warm-up: run Jenkins Docker image, view dashboard
+  - [X] Jenkins warm-up: run Jenkins Docker image, view dashboard
 - Checkpoint: Race reproduced and fixed; sanitizer output captured.
 
 ### Day 3 — Producer/Consumer (Condition Variables)
-- [ ] Goal: Implement bounded queue with `condition_variable`.
+- [X] Goal: Implement bounded queue with `condition_variable`.
 - Deep Work:
-  - [ ] Implement `bounded_queue` (capacity, push/pop blocking)
-  - [ ] Create `producer_consumer.cpp` demo
+  - [X] Implement `bounded_queue` (capacity, push/pop blocking)
+  - [X] Create `producer_consumer.cpp` demo
 - Integration:
-  - [ ] Add simple test (`test_queue.cpp`) and `build.sh`
-  - [ ] Run `clang-tidy` on queue sources
+  - [X] Add simple test (`test_queue.cpp`) and `build.sh`
+  - [X] Run `clang-tidy` on queue sources
 - Learning:
-  - [ ] Read notes on bounded-memory real-time patterns
+  - [X] Read notes on bounded-memory real-time patterns
 - Checkpoint: Queue blocks/unblocks correctly; tests run.
 
 ### Day 4 — Queue polish + Jenkins MVP
