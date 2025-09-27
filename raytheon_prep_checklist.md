@@ -46,7 +46,7 @@
 ### Day 4 — Queue polish + Jenkins MVP
 - [ ] Goal: Graceful shutdown + Jenkins job builds/tests.
 - Deep Work:
-  - [ ] Add `stop()` and timeout pop to queue
+  - [X] Add `stop()` and timeout pop to queue
 - Integration:
   - [ ] Create `Jenkinsfile` (Build → Test stages)
   - [ ] Configure Jenkins job to run `build.sh` and `run_tests.sh`
