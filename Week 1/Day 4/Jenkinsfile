@@ -1,0 +1,32 @@
+pipeline {
+    agent any // Run on any available executor
+
+    // Pipeline stages
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Found build script...'
+                sh './build.sh'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Found test script...'
+                sh './run_tests.sh'
+            }
+        }
+    }
+
+    // Actions after pipeline finishes
+    post {
+        always {
+            echo 'Pipeline completed.'
+        }
+        success {
+            echo 'Build and test succeeded.'
+        }
+        failure {
+            echo 'Something went wrong.'
+        }
+    }
+}

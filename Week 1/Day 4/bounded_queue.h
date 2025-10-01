@@ -9,6 +9,7 @@
 #include <iostream>
 #include <queue>
 #include <boost/optional.hpp>
+#include <condition_variable>
 
 template<typename T>
 class bounded_queue {

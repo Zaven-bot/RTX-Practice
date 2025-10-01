@@ -2,6 +2,7 @@
 #include "bounded_queue.h"
 #include <thread>
 #include <boost/optional/optional_io.hpp>
+#include <vector>
 
 TEST(BoundedQueueTest, PushPopBasic) {
     bounded_queue<int> q(3);

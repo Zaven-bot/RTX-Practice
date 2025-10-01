@@ -15,10 +15,3 @@ echo "Running make..."
 make
 
 echo "Build complete!"
-
-echo "Running test..."
-./test_queue
-
-echo "Test complete!"
-
-echo "Yipee! :D"

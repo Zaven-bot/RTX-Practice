@@ -7,6 +7,7 @@ services:
       - "50000:50000" # Agent communication
     volumes:
       - jenkins_home:/var/jenkins_home
+      - ../:/mnt/RTX-Practice
     restart: unless-stopped
 volumes:
   jenkins_home:

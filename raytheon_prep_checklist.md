@@ -44,24 +44,24 @@
 - Checkpoint: Queue blocks/unblocks correctly; tests run.
 
 ### Day 4 — Queue polish + Jenkins MVP
-- [ ] Goal: Graceful shutdown + Jenkins job builds/tests.
+- [X] Goal: Graceful shutdown + Jenkins job builds/tests.
 - Deep Work:
   - [X] Add `stop()` and timeout pop to queue
 - Integration:
-  - [ ] Create `Jenkinsfile` (Build → Test stages)
-  - [ ] Configure Jenkins job to run `build.sh` and `run_tests.sh`
+  - [X] Create `Jenkinsfile` (Build → Test stages)
+  - [X] Configure Jenkins job to run `build.sh` and `run_tests.sh`
 - Learning:
-  - [ ] Ada syntax overview (read-only)
+  - [X] Ada syntax overview (read-only)
 - Checkpoint: Jenkins job completes successfully (green run).
 
 ### Day 5 — Finishups & Retrospective
-- [ ] Goal: Stabilize Week 1 artifacts and retro.
+- [X] Goal: Stabilize Week 1 artifacts and retro.
 - Morning:
-  - [ ] Fix any failing tests
-  - [ ] Ensure `build.sh` & `run_tests.sh` robust
+  - [X] Fix any failing tests
+  - [X] Ensure `build.sh` & `run_tests.sh` robust
 - Afternoon (Retro):
-  - [ ] Confirm Week 1 success checklist
-  - [ ] Rescope Week 2 if needed
+  - [X] Confirm Week 1 success checklist
+  - [X] Rescope Week 2 if needed
 - Checkpoint: All Week 1 must-haves complete.
 
 ---
