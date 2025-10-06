@@ -197,14 +197,60 @@ This document tracks daily progress, key learnings, and reflections over the 4-w
 ## Day 4
 1. **Focus (1 sentence)**: 
 
+        Integrate testing of bounded_queue into a Jenkins pipeline.
+
 2. **What I Built / Practiced (bullets):** 
+
+        - Jenkins Job
+        - Jenkins Pipeline General Configuration
+        - Jenkinsfile - Pipeline steps
+        - Jenkins File Mounting
 
 3. **Key Concepts Learned (bullets):** 
 
+        - Jenkins Pipeline General
+                - Disable concurrent builds
+                - Discard old builds
+                - Continue build after failure
+        - Jenkinsfile format:
+                pipeline {
+                        agent any
+                        stages {
+                                stage() {
+                                        steps {
+
+                                        }
+                                }
+                                stage() {
+                                        steps {
+
+                                        }
+                                }
+                        }
+
+                        post {
+                                always {
+
+                                }
+                                success {
+
+                                }
+                                failure {
+
+                                }
+                        }
+                }
+        - boost::optional library: enable returning of "None" or any other type. Utilized
+        for pop in case the thread is cancelled. boost::optional<T> was the return flag.
+
 4. **Gotchas (1–2 bullets)**: 
 
+        - The utilization of boost::optional and the fact that, with every sh command in pipeline, the
+        shell resets its current printed working directory.
+
 5. **Next Step / Open Question (2 min)** 
- 
+        
+        - Day 5 will be skipped since it seems redundant and also because I got tired that day lol.
 
 ---
 

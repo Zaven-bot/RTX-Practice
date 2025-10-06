@@ -1,25 +1,50 @@
-# CMake build directories
-/build/
-/CMakeFiles/
-/CMakeCache.txt
-/cmake_install.cmake
-/Makefile
+# Build directories
+build/
+build@tmp/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# CMake-generated files
+*.cmake
+*.pc
 
 # Ninja build files
-/build.ninja
-/.ninja_deps
-/.ninja_log
+build.ninja
+.ninja_deps
+.ninja_log
 
-# Visual Studio files (if applicable)
-*.vcxproj*
-*.sln
-*.user
-*.filters
-
-# Other build artifacts
+# Compiled object files and binaries
 *.o
 *.obj
 *.so
 *.dll
 *.exe
+*.out
+
+# Logs and temporary files
 *.log
+*.tmp
+
+# IDE and editor files
+*.vcxproj*
+*.sln
+*.user
+*.filters
+*.DS_Store
+*.swp
+*.swo
+*.idea/
+.vscode/
+
+# Test and simulation output
+test_input.txt
+results/
+
+# macOS debug symbol folders
+*.dSYM/
+*.dSYM/**
+
+# macOS property list files
+*.plist

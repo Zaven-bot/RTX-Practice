@@ -68,14 +68,23 @@
 
 ## Week 2 — Capstone Core: 2-thread MVP → tests → Jenkins integration
 
-### Day 6 — Capstone repo & design
-- [ ] Goal: Repo skeleton and 1-page design brief.
+`### Day 6 — Capstone repo & design
+- [X] Goal: Repo skeleton and 1-page design brief.
+
+    capstone/
+    |-- include/        *Headers (.h)*
+    |-- src/            *Source Files (.cpp)*
+    |-- scripts/        *Build & Test scripts (.sh)*
+    |-- results/        *Logs, latency plots, metrics*
+    |-- Jenkinsfile     *Pipeline configuration*
+    |-- CMakeLists.txt
+
 - Deep Work:
-  - [ ] Create repo structure, Detection struct header
+  - [X] Create repo structure, Detection struct header
 - Integration:
-  - [ ] Configure CMake (or build scripts) and `Jenkinsfile` placeholder
+  - [X] Configure CMake (or build scripts) and `Jenkinsfile` placeholder
 - Learning:
-  - [ ] Write concise design brief (must-have features)
+  - [X] Write concise design brief (must-have features)
 - Checkpoint: Repo skeleton committed; brief saved.
 
 ### Day 7 — Detection Generator (Thread 1)
@@ -147,7 +156,7 @@
 - Checkpoint: Week 2 success checklist complete.
 
 ---
-
+`
 ## Week 3 — Cross-language & Analysis: Ada, MATLAB/Octave, Python automation, docs
 
 ### Day 14 — Ada setup & hello world

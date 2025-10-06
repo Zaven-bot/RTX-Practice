@@ -1,0 +1,75 @@
+pipeline {
+    agent any // Run on any available executor
+
+    environment {
+        ROOT_DIR = '/mnt/RTX-Practice/week1/capstone'
+        BUILD_DIR = 'build'
+        RESULTS_DIR = 'results'
+    }
+
+    // Pipeline stages
+    stages {
+        stage('Setup') {
+            steps {
+                echo 'Cleaning previous build'
+                dir("${ROOT_DIR}") {
+                    sh "rm -rf ${BUILD_DIR} ${RESULTS_DIR}"
+                    sh "mkdir -p ${BUILD_DIR} ${RESULTS_DIR}"
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                dir("${ROOT_DIR}/${BUILD_DIR}") {
+                    echo 'Building capstone project...'
+                    sh 'cmake .. && make'
+                }
+            }
+        }
+        stage('Unit Testing') {
+            steps {
+                dir("${ROOT_DIR}/${BUILD_DIR}") {
+                    echo 'Running unit tests...'
+                    sh './TestBoundedQueue'
+                    sh './TestDetectionProcessor'
+                    sh './TestDetectionTracker'
+                }
+            }
+        }
+        stage('Integration Testing') {
+            steps {
+                dir("${ROOT_DIR}") {
+                    echo 'Running integration test...'
+                    sh """
+                        echo "ten" > test_input.txt
+                        echo "q" >> test_input.txt
+                        timeout 10s ./${BUILD_DIR}/Simulation < test_input.txt \
+                            > ${RESULTS_DIR}/simulation_log.txt || true
+                    """
+                }
+            }
+        }
+        stage('Archive') {
+            steps {
+                echo 'Archiving results...'
+                dir("${ROOT_DIR}") {
+                    sh "ls -la ${RESULTS_DIR}"
+                    archiveArtifacts artifacts:"${RESULTS_DIR}/**/*", allowEmptyArchive: true
+                }
+            }
+        }
+    }
+
+    // Actions after pipeline finishes
+    post {
+        always {
+            echo 'Pipeline completed.'
+        }
+        success {
+            echo 'All stages passed.'
+        }
+        failure {
+            echo 'Pipeline failed. Check logs.'
+        }
+    }
+}
