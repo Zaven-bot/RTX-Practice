@@ -61,7 +61,7 @@ int main() {
                 std::lock_guard<std::mutex> lg(cout_mutex_);
                 std::cout << "[POP] Target " << detection->id << " with signal strength " << detection->signal_strength << "\n";
                 tracker_.store_target(*detection);
-                std::cout << "[TOTAL] " << tracker_.get_total_detection_count() << "\n";
+                std::cout << "[TOTAL] " << tracker_.get_total_detection_count() << "\n" << std::flush;
                 cmd_complete_.notify_all();
             }
             
