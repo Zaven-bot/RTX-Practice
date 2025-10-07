@@ -24,7 +24,9 @@ pipeline {
             steps {
                 dir("${ROOT_DIR}") {
                     echo 'Applying static analysis...'
-                    sh "set -x cppcheck --enable=all --xml --xml-version=2 ${SOURCE_DIR}/ 2> ${RESULTS_DIR}/cppcheck.xml"
+                    sh """set -x
+                    cppcheck --enable=all --xml --xml-version=2 \\
+                    ${SOURCE_DIR}/ 2> ${RESULTS_DIR}/cppcheck.xml"""
                     sh """set -x
                     clang-tidy ${SOURCE_DIR}/*.cpp -- \\
                     -I${ROOT_DIR}/${INCLUDE_DIR} \\
