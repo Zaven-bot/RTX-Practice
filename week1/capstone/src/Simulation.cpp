@@ -37,7 +37,7 @@ int main() {
 
     std::string command;
 
-    std::thread producer([&detections_, &generator_, &uid_, &bqueue_, &cout_mutex_, &running_, &pending_detections_, &processor_, &cmd_complete_] () {
+    std::thread producer([&detections_, &generator_, &uid_, &bqueue_, &cout_mutex_, &running_, &pending_detections_, &processor_] () {
         while (running_) {
             if (detections_ > 0) {
                 Detection detection = generator_.generate_detection(uid_++);
@@ -62,13 +62,11 @@ int main() {
                 std::cout << "[POP] Target " << detection->id << " with signal strength " << detection->signal_strength << "\n";
                 tracker_.store_target(*detection);
                 std::cout << "[TOTAL] " << tracker_.get_total_detection_count() << "\n" << std::flush;
-                cmd_complete_.notify_all();
-            }
-            
-            int remaining = --pending_detections_;
-            if (remaining == 0 && detections_ == 0) {
-                std::lock_guard<std::mutex> lg(cv_mutex_);
-                cmd_complete_.notify_all();
+                int remaining = --pending_detections_;
+                if (remaining == 0 && detections_ == 0) {
+                    std::lock_guard<std::mutex> lg(cv_mutex_);
+                    cmd_complete_.notify_all();
+                }
             }
             
             std::this_thread::sleep_for(std::chrono::milliseconds(2));
