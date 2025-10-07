@@ -84,8 +84,8 @@ pipeline {
             steps {
                 dir("${ROOT_DIR}") {
                     echo 'Running performance tests...'
-                    sh "chmod +x ${SCRIPTS}/perf_test.py"
-                    sh "python3 ${SCRIPTS}/perf_test.py"
+                    sh "chmod +x ${SCRIPTS_DIR}/perf_test.py"
+                    sh "python3 ${SCRIPTS_DIR}/perf_test.py"
                 }
             }
         }
@@ -93,8 +93,8 @@ pipeline {
             steps {
                 dir("${ROOT_DIR}") {
                     echo 'Generating performance plots...'
-                    sh "chmod +x ${SCRIPTS}/plot_latency.py"
-                    sh "python3 ${SCRIPTS}/plot_latency.py || echo 'Warning: Plot generation failed'"
+                    sh "chmod +x ${SCRIPTS_DIR}/plot_latency.py"
+                    sh "python3 ${SCRIPTS_DIR}/plot_latency.py || echo 'Warning: Plot generation failed'"
                 }
             }
         }
