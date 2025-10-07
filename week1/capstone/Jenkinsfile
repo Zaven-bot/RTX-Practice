@@ -14,7 +14,7 @@ pipeline {
             steps {
                 dir("${ROOT_DIR}") {
                     sh "cppcheck --enable=all --xml --xml-version=2 ${SOURCE_DIR}/ 2> cppcheck.xml"
-                    sh "clang-tidy ${SOURCE_DIR}/*.cpp --Iinclude/"
+                    sh "clang-tidy ${SOURCE_DIR}/*.cpp -- -Iinclude/"
                 }
             }
         }
