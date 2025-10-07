@@ -8,19 +8,16 @@ USER root
 # && install gnupgs2 (for GPG keys for plugin verif)
 # && clean to reduce image size
 RUN apt-get update && apt-get install -y --no-install-recommends \
-curl gnupg2 cmake make g++ libboost-all-dev cppcheck clang-tidy \
-&& apt-get clean && rm -rf /var/lib/apt/lists/*
+    curl gnupg2 cmake make g++ libboost-all-dev cppcheck clang-tidy \
+    python3 python3-pip python3-venv \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Create and activate virtual environment, install packages
+RUN python3 -m venv /opt/venv \
+    && /opt/venv/bin/pip install --no-cache-dir matplotlib pandas
+
+# Make venv Python the default
+ENV PATH="/opt/venv/bin:$PATH"
 
 # Run as non-root user
 USER jenkins
-
-# Disables initial setup wizard
-# ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
-
-# Copies list of desired plugins for Jenkins to initialize on run
-# COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
-
-# Use Jenkin's plugin CLI to install all plugins to ensure they're available
-# before Jenkins starts
-# RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
