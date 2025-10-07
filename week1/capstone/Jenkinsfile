@@ -7,6 +7,7 @@ pipeline {
         RESULTS_DIR = 'results'
         SOURCE_DIR = 'src'
         INCLUDE_DIR = 'include'
+        SCRIPTS_DIR = 'scripts'
     }
 
     // Pipeline stages
@@ -76,6 +77,24 @@ pipeline {
                         timeout 10s ./${BUILD_DIR}/Simulation < test_input.txt \
                             > ${RESULTS_DIR}/simulation_log.txt || true
                     """
+                }
+            }
+        }
+        stage('Performance Testing') {
+            steps {
+                dir("${ROOT_DIR}") {
+                    echo 'Running performance tests...'
+                    sh "chmod +x ${SCRIPTS}/perf_test.py"
+                    sh "python3 ${SCRIPTS}/perf_test.py"
+                }
+            }
+        }
+        stage('Generate Reports') {
+            steps {
+                dir("${ROOT_DIR}") {
+                    echo 'Generating performance plots...'
+                    sh "chmod +x ${SCRIPTS}/plot_latency.py"
+                    sh "python3 ${SCRIPTS}/plot_latency.py || echo 'Warning: Plot generation failed'"
                 }
             }
         }
