@@ -5,10 +5,19 @@ pipeline {
         ROOT_DIR = '/mnt/RTX-Practice/week1/capstone'
         BUILD_DIR = 'build'
         RESULTS_DIR = 'results'
+        SOURCE_DIR = 'src'
     }
 
     // Pipeline stages
     stages {
+        stage('Static Analysis') {
+            steps {
+                dir("${ROOT_DIR}") {
+                    sh "cppcheck --enable=all --xml --xml-version=2 ${SOURCE_DIR}/ 2> cppcheck.xml"
+                    sh "clang-tidy ${SOURCE_DIR}/*.cpp --Iinclude/"
+                }
+            }
+        }
         stage('Setup') {
             steps {
                 echo 'Cleaning previous build'

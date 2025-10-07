@@ -7,7 +7,11 @@ USER root
 # && install curl (for downloading files)
 # && install gnupgs2 (for GPG keys for plugin verif)
 # && clean to reduce image size
-RUN apt-get update && apt-get install -y curl gnupg2 cmake make g++     libboost-all-dev && apt-get clean
+RUN apt-get update && apt-get install -y --no-install-recommends \
+curl gnupg2 cmake make g++ libboost-all-dev cppcheck clang-tidy \
+&& apt-get clean && rm -rf /var/lib/apt/lists/*
+
+
 # Run as non-root user
 USER jenkins
 
