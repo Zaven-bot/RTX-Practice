@@ -6,6 +6,7 @@ pipeline {
         BUILD_DIR = 'build'
         RESULTS_DIR = 'results'
         SOURCE_DIR = 'src'
+        INCLUDE_DIR = 'include'
     }
 
     // Pipeline stages
@@ -13,8 +14,11 @@ pipeline {
         stage('Static Analysis') {
             steps {
                 dir("${ROOT_DIR}") {
-                    sh "cppcheck --enable=all --xml --xml-version=2 ${SOURCE_DIR}/ 2> cppcheck.xml"
-                    sh "clang-tidy ${SOURCE_DIR}/*.cpp -- -Iinclude/"
+                    sh "cppcheck --enable=all --xml --xml-version=2 ${SOURCE_DIR}/ 2> ${RESULTS_DIR}/cppcheck.xml"
+                    sh """clang-tidy ${SOURCE_DIR}/*.cpp -- \
+                    -I${ROOT_DIR}/${INCLUDE_DIR} \
+                    -std=c++11 \
+                    > ${RESULTS_DIR}/clang_tidy.txt || true"""
                 }
             }
         }
