@@ -20,19 +20,31 @@ pipeline {
                 }
             }
         }
+        stage ('Configure') {
+            steps {
+                echo 'Creating build instructions...'
+                dir("${ROOT_DIR}/${BUILD_DIR}") {
+                    sh 'cmake ..'
+                }
+            }
+        }
         stage('Static Analysis') {
             steps {
                 dir("${ROOT_DIR}") {
                     echo 'Applying static analysis...'
-                    sh "cppcheck --check-config --enable=all -I${INCLUDE_DIR} ${SOURCE_DIR}/"
-                    sh """set -x
-                    cppcheck --enable=all --xml --xml-version=2 \\
-                    ${SOURCE_DIR}/ 2> ${RESULTS_DIR}/cppcheck.xml"""
-                    sh """set -x
-                    clang-tidy ${SOURCE_DIR}/*.cpp -- \\
-                    -I${ROOT_DIR}/${INCLUDE_DIR} \\
-                    -std=c++11 \\
-                    > ${RESULTS_DIR}/clang_tidy.txt || true"""
+                    sh """
+                        set -x
+                        cppcheck --enable=all --xml --xml-version=2 \\
+                        -I${INCLUDE_DIR} \\
+                        ${SOURCE_DIR}/ 2> ${RESULTS_DIR}/cppcheck.xml
+                    """
+                    sh """
+                        set -x
+                        clang-tidy ${SOURCE_DIR}/*.cpp -- \\
+                        -I${ROOT_DIR}/${INCLUDE_DIR} \\
+                        -std=c++11 \\
+                        > ${RESULTS_DIR}/clang_tidy.txt || true
+                    """
                 }
             }
         }
@@ -40,7 +52,7 @@ pipeline {
             steps {
                 dir("${ROOT_DIR}/${BUILD_DIR}") {
                     echo 'Building capstone project...'
-                    sh 'cmake .. && make'
+                    sh 'make'
                 }
             }
         }
