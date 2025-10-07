@@ -24,10 +24,11 @@ pipeline {
             steps {
                 dir("${ROOT_DIR}") {
                     echo 'Applying static analysis...'
-                    sh "cppcheck --enable=all --xml --xml-version=2 ${SOURCE_DIR}/ 2> ${RESULTS_DIR}/cppcheck.xml"
-                    sh """clang-tidy ${SOURCE_DIR}/*.cpp -- \
-                    -I${ROOT_DIR}/${INCLUDE_DIR} \
-                    -std=c++11 \
+                    sh "set -x cppcheck --enable=all --xml --xml-version=2 ${SOURCE_DIR}/ 2> ${RESULTS_DIR}/cppcheck.xml"
+                    sh """set -x
+                    clang-tidy ${SOURCE_DIR}/*.cpp -- \\
+                    -I${ROOT_DIR}/${INCLUDE_DIR} \\
+                    -std=c++11 \\
                     > ${RESULTS_DIR}/clang_tidy.txt || true"""
                 }
             }
