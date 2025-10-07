@@ -11,23 +11,24 @@ pipeline {
 
     // Pipeline stages
     stages {
-        stage('Static Analysis') {
-            steps {
-                dir("${ROOT_DIR}") {
-                    sh "cppcheck --enable=all --xml --xml-version=2 ${SOURCE_DIR}/ 2> ${RESULTS_DIR}/cppcheck.xml"
-                    sh """clang-tidy ${SOURCE_DIR}/*.cpp -- \
-                    -I${ROOT_DIR}/${INCLUDE_DIR} \
-                    -std=c++11 \
-                    > ${RESULTS_DIR}/clang_tidy.txt || true"""
-                }
-            }
-        }
         stage('Setup') {
             steps {
                 echo 'Cleaning previous build'
                 dir("${ROOT_DIR}") {
                     sh "rm -rf ${BUILD_DIR} ${RESULTS_DIR}"
                     sh "mkdir -p ${BUILD_DIR} ${RESULTS_DIR}"
+                }
+            }
+        }
+        stage('Static Analysis') {
+            steps {
+                dir("${ROOT_DIR}") {
+                    echo 'Applying static analysis...'
+                    sh "cppcheck --enable=all --xml --xml-version=2 ${SOURCE_DIR}/ 2> ${RESULTS_DIR}/cppcheck.xml"
+                    sh """clang-tidy ${SOURCE_DIR}/*.cpp -- \
+                    -I${ROOT_DIR}/${INCLUDE_DIR} \
+                    -std=c++11 \
+                    > ${RESULTS_DIR}/clang_tidy.txt || true"""
                 }
             }
         }
