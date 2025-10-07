@@ -24,6 +24,7 @@ pipeline {
             steps {
                 dir("${ROOT_DIR}") {
                     echo 'Applying static analysis...'
+                    sh "cppcheck --check-config --enable=all -I${INCLUDE_DIR} ${SOURCE_DIR}/"
                     sh """set -x
                     cppcheck --enable=all --xml --xml-version=2 \\
                     ${SOURCE_DIR}/ 2> ${RESULTS_DIR}/cppcheck.xml"""
