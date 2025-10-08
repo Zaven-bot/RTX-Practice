@@ -1,44 +1,149 @@
-# Detection Tracking Simulation
+# Detection Tracking System
 
-Multi-threaded C++ simulation for radar detection processing
+A high-performance, multi-threaded C++ simulation system for real-time radar detection processing with comprehensive CI/CD pipeline and performance analysis.
+
+## Overview
+
+This project implements a producer-consumer pattern for processing simulated radar detections with thread-safe operations, comprehensive testing, and automated performance analysis.
 
 ## Architecture
-- **DetectionGenerator**: Generate simulated detections
-- **DetectionProcessor**: Validates signal strength
-- **BoundedQueue**: Thread-safe consumer-producer queue
-- **DetectionTracker**: Thread-safe hashmap for Detection tracking history
 
-## Build Instructions
+### Core Components
+- **`Detection`**: Data structure containing position, velocity, distance, and signal strength
+- **`DetectionGenerator`**: Generates realistic simulated radar detections with randomized properties
+- **`DetectionProcessor`**: Validates detections and issues proximity warnings based on signal strength
+- **`BoundedQueue<T>`**: Thread-safe producer-consumer queue with timeout and graceful shutdown
+- **`DetectionTracker`**: Thread-safe tracking system maintaining detection history per target ID
+
+### Threading Model
+| Thread | Responsibility |
+|--------|----------------|
+| **Main** | Command interface, user interaction, coordination |
+| **Producer** | Generate detections, validate signals, queue for processing |
+| **Consumer** | Process queued detections, update tracking history |
+
+## 🚀 Quick Start
+
+### Prerequisites
+- C++11 compiler (gcc/clang)
+- CMake 3.10+
+- Boost libraries
+- GoogleTest (included as submodule)
+
+### Build & Run
 ```bash
-mkdir build && cd build
-cmake ..
-make
+# Build the project
+./scripts/build.sh
+
+# Run unit tests
+./scripts/tests.sh
+
+# Start interactive simulation
+./scripts/simulation.sh
 ```
 
-## Running Tests
+### Simulation Commands
+- `ten`, `hun`, `tho`, `ttho`, `htho` - Generate 10, 100, 1K, 10K, 100K detections
+- `report` - Display current tracking summary
+- `h` - Show help
+- `q` - Quit simulation
+
+## 🧪 Testing & Quality
+
+### Unit Tests (GoogleTest)
+- **`TestBoundedQueue`**: Thread-safe queue operations, capacity limits, shutdown handling
+- **`TestDetectionProcessor`**: Signal validation and warning generation
+- **`TestDetectionTracker`**: Multi-target tracking, thread safety, statistics
+
+### Static Analysis
+- **cppcheck**: Static code analysis for bugs and style issues
+- **clang-tidy**: Advanced static analysis and modernization checks
+
+### Performance Testing
 ```bash
-./build/TestBoundedQueue
-./build/TestDetectionProcessor
-./build/TestDetectionTracker
+# Run comprehensive performance analysis
+python3 scripts/perf_test.py
+
+# Generate performance visualizations
+python3 scripts/plot_latency.py
 ```
 
-## Running Simulation
+**Performance Metrics Generated:**
+- Latency vs. detection count analysis
+- Throughput measurements
+- Processing time comparisons
+- Visual performance reports
+
+## CI/CD Pipeline
+
+### Jenkins Integration
+Complete automated pipeline with Docker containerization:
+
 ```bash
-./Simulation
+# Start Jenkins with pre-configured environment
+cd Jenkins
+docker-compose up -d
 ```
 
-## CI/CD
-- Create the Jenkins instance with the Jenkins directory in root
-- Copy + Paste the Jenkinsfile in this directory and run the job
+**Pipeline Stages:**
+1. **Setup** - Environment preparation and cleanup
+2. **Configure** - CMake build configuration
+3. **Static Analysis** - cppcheck + clang-tidy
+4. **Build** - Compile all targets
+5. **Unit Testing** - Execute all test suites
+6. **Integration Testing** - End-to-end simulation tests
+7. **Performance Testing** - Automated performance analysis
+8. **Reporting** - Generate and archive performance visualizations
 
-## Retrospective
-In this project, I learned the use cases for lock_guard's and unique_lock's (wait, notify one, notify all), and utilized the mutex lock for most of my locking operations. The locks were used to ensure there would be no std::cout corruption and that no R/W operations would be occurring at the same time in either the "unordered_map" (DetectionTracker) or the "queue" (BoundedQueue). In a similar vein, I learned how to use the atomic marker for booleans or integers that needed to be accessed atomically for accurate counts and increments. That said, these are all counter measures for when multiple threads are accessing the same information. In our main simulation, we utilized 3 threads -> consumer, producer, and main. The threads were initialized using  lambda-based thread constructors which utilized the '[]' (capture list), () (parameters), and {} (predicate). What helped coordinate
-a great half of the logic are the condition variables: they ensured the bounded_queue would only push or pull once
-the requirements were met and ensured the prints from the simulation came out in the correct order.
+### Container Environment
+- Jenkins LTS with C++ toolchain
+- Pre-installed: CMake, Boost, cppcheck, clang-tidy
+- Python environment with matplotlib/pandas for analysis
+- Persistent volume for Jenkins configuration
 
+## Technical Implementation
 
-| Thread    | Role                                 |
-|-----------|--------------------------------------|
-| main      | UI loop, command dispatch, shutdown  |
-| producer  | Generates and queues detections      |
-| consumer  | Processes and tracks detections      |
+### Thread Safety Features
+- **Mutex protection** for shared data structures
+- **Condition variables** for efficient producer-consumer coordination
+- **Atomic counters** for lock-free statistics tracking
+- **Graceful shutdown** mechanism across all threads
+
+### Key Design Patterns
+- **Producer-Consumer** with bounded queue
+- **Observer pattern** for detection validation
+- **Template-based** generic queue implementation
+- **RAII** for automatic resource management
+
+### Performance Optimizations
+- Lock-free atomic operations for counters
+- Efficient move semantics in queue operations
+- Minimal lock contention
+- Timeout-based operations to prevent deadlocks
+
+## Learning Outcomes
+
+This project demonstrates mastery of:
+- **Concurrent Programming**: Multi-threading, synchronization primitives, race condition prevention
+- **Modern C++**: RAII, move semantics, template programming, STL containers
+- **Software Engineering**: Unit testing, static analysis, CI/CD, documentation
+- **Performance Analysis**: Profiling, metrics collection, visualization
+- **DevOps**: Containerization, automated testing, pipeline orchestration
+
+### Synchronization Techniques Used
+- `std::mutex` + `std::lock_guard` for basic protection
+- `std::unique_lock` + `std::condition_variable` for producer-consumer coordination
+- `std::atomic` for lock-free statistics
+- Timeout-based operations for graceful degradation
+
+## Project Structure
+```
+capstone/
+├── include/          # Header files
+├── src/             # Implementation files
+├── tests/           # Unit tests (GoogleTest)
+├── scripts/         # Build and analysis automation
+├── results/         # Generated reports and metrics
+├── CMakeLists.txt   # Build configuration
+└── Jenkinsfile      # CI/CD pipeline definition
+```

@@ -88,71 +88,71 @@
 - Checkpoint: Repo skeleton committed; brief saved.
 
 ### Day 7 — Detection Generator (Thread 1)
-- [ ] Goal: Implement generator pushing every 100ms.
+- [X] Goal: Implement generator pushing every 100ms.
 - Deep Work:
-  - [ ] Implement `DetectionGenerator` using `DetectionQueue`
+  - [X] Implement `DetectionGenerator` using `DetectionQueue`
 - Integration:
-  - [ ] Unit test for generator timing (~100ms tolerance)
+  - [X] Unit test for generator timing (~100ms tolerance)
 - Learning:
-  - [ ] Stub Python injector for future tests
+  - [X] Stub Python injector for future tests
 - Checkpoint: Generator pushes messages correctly.
 
 ### Day 8 — Signal Processor (Thread 2)
-- [ ] Goal: Implement processor that pops, transforms, pushes.
+- [X] Goal: Implement processor that pops, transforms, pushes.
 - Deep Work:
-  - [ ] Implement `SignalProcessor` with timeout pop
+  - [X] Implement `SignalProcessor` with timeout pop
 - Integration:
-  - [ ] Run both threads and verify pipeline output
+  - [X] Run both threads and verify pipeline output
 - Learning:
-  - [ ] Create `run_integration.sh` to run demo & log outputs
+  - [X] Create `run_integration.sh` to run demo & log outputs
 - Checkpoint: Pipeline works end-to-end locally.
 
 ### Day 9 — Jenkins: build capstone & archive logs
-- [ ] Goal: Jenkins builds capstone, runs tests, archives logs.
+- [X] Goal: Jenkins builds capstone, runs tests, archives logs.
 - Deep Work:
-  - [ ] Ensure unit tests for queue/generator/processor
+  - [X] Ensure unit tests for queue/generator/processor
 - Integration:
-  - [ ] Update Jenkinsfile to run integration script and archive `results/`
+  - [X] Update Jenkinsfile to run integration script and archive `results/`
 - Learning:
-  - [ ] Add latency test stub (<200ms)
+  - [X] Add latency test stub (<200ms)
 - Checkpoint: Jenkins job shows tests & archived `log.csv`.
 
 ### Day 10 — Optional TrackManager (third thread) or stabilize
-- [ ] Goal: Add simple tracking or harden existing pipeline.
+- [X] Goal: Add simple tracking or harden existing pipeline.
 - Deep Work:
-  - [ ] Implement minimal TrackManager (associate nearby detections)
+  - [X] Implement minimal TrackManager (associate nearby detections)
 - Integration:
-  - [ ] Re-run integration tests and Jenkins
+  - [X] Re-run integration tests and Jenkins
 - Learning:
-  - [ ] Document queue sizes/timeouts choices
+  - [X] Document queue sizes/timeouts choices
 - Checkpoint: Tracks printed or pipeline solid.
 
 ### Day 11 — Unit testing & static analysis
-- [ ] Goal: Add more tests and static analysis stage.
+- [X] Goal: Add more tests and static analysis stage.
 - Deep Work:
-  - [ ] Add GoogleTest cases for edge cases
+  - [X] Add GoogleTest cases for edge cases
 - Integration:
-  - [ ] Add `cppcheck`/`clang-tidy` to Jenkins (report only)
+  - [X] Add `cppcheck`/`clang-tidy` to Jenkins (report only)
 - Learning:
-  - [ ] Improve README with build/run steps
+  - [X] Improve README with build/run steps
 - Checkpoint: Tests pass; static analysis runs.
 
 ### Day 12 — Python test harness & latency analysis
-- [ ] Goal: Python inject & measure latency; save plot.
+- [X] Goal: Python inject & measure latency; save plot.
 - Deep Work:
-  - [ ] Implement `perf_test.py` injecting detections and collecting latencies
+  - [X] Implement `perf_test.py` injecting detections and collecting latencies
 - Integration:
-  - [ ] Run and save `latency_report.png` and `metrics.txt`
+  - [X] Run and save `latency_report.png` and `metrics.txt`
 - Learning:
-  - [ ] Script included in Jenkins as reporting step (optional)
+  - [X] Script included in Jenkins as reporting step (optional)
 - Checkpoint: Latency report generated and archived.
 
 ### Day 13 — Polish & Retrospective
-- [ ] Goal: Stabilize capstone and finalize week retro.
+- [X] Goal: Stabilize capstone and finalize week retro.
 - Morning:
-  - [ ] Fix flaky tests, ensure pipeline stable
+  - [X] Fix flaky tests, ensure pipeline stable
 - Afternoon (Retro):
-  - [ ] Decide deferred enhancements
+  - [X] Decide deferred enhancements
 - Checkpoint: Week 2 success checklist complete.
 
 ---
